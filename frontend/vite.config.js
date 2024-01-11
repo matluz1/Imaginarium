@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
             port: process.env.FRONTEND_PORT,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:' + process.env.BACKEND_PORT,
+                    target: 'http://localhost:' + process.env.API_GATEWAY_PORT,
                     changeOrigin: true,
                 },
             },

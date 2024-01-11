@@ -32,7 +32,7 @@ apiRouter.get('/generateToken', (req, res) => {
   res.json({ token });
 });
 
-app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

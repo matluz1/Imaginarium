@@ -7,7 +7,17 @@ services:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     environment:
       FRONTEND_PORT: ${FRONTEND_PORT}
+      API_GATEWAY_PORT: ${API_GATEWAY_PORT}
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - '${API_GATEWAY_PORT}:${API_GATEWAY_PORT}'
+    environment:
       BACKEND_PORT: ${BACKEND_PORT}
+      API_GATEWAY_PORT: ${API_GATEWAY_PORT}
+    depends_on:
+      - backend
 
   backend:
     build: ./backend

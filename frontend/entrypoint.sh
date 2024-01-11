@@ -1,5 +1,5 @@
 #!/bin/sh
 
-envsubst '${BACKEND_PORT},${FRONTEND_PORT}' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/conf.d/default.conf
+envsubst '${API_GATEWAY_PORT},${FRONTEND_PORT}' < /etc/nginx/templates/nginx.template.conf > /etc/nginx/conf.d/default.conf
 
 nginx -g 'daemon off;'

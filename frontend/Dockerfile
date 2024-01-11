@@ -9,9 +9,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
-COPY nginx.conf.template /etc/nginx/templates/nginx.conf.template
-
-EXPOSE ${FRONTEND_PORT}
+COPY nginx.template.conf /etc/nginx/templates/nginx.template.conf
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
