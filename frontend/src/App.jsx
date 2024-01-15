@@ -6,7 +6,8 @@ const App = () => {
 
   // Generate random token for a new user
   useEffect(() => {
-    axios.get('/api/generateToken')
+    axios
+      .get('/api/generateToken')
       .then((response) => {
         setToken(response.data.token);
       })
