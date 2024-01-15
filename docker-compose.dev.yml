@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  frontend:
+    extends:
+      file: docker-compose.yml
+      service: frontend
+    build:
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - ./frontend:/app/
+      - frontend-nodemodules:/app/node_modules
+
+  api-gateway:
+    extends:
+      file: docker-compose.yml
+      service: api-gateway
+    depends_on:
+      - backend
+
+  backend:
+    extends:
+      file: docker-compose.yml
+      service: backend
+    volumes:
+      - ./backend:/app/
+      - backend-nodemodules:/app/node_modules
+
+volumes:
+  frontend-nodemodules: {}
+  backend-nodemodules: {}

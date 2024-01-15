@@ -1,5 +1,4 @@
-# Step 1: Build the application
-FROM node:16 AS builder
+FROM node:18.19.0 AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -11,7 +10,7 @@ FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY nginx.template.conf /etc/nginx/templates/nginx.template.conf
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY entrypoint-prod.sh /entrypoint-prod.sh
+RUN chmod +x /entrypoint-prod.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint-prod.sh"]

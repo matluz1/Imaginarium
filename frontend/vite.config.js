@@ -4,7 +4,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 export default defineConfig(({ mode }) => {
-    dotenv.config({path:__dirname+'/../.env.development'});
+    dotenv.config({path:__dirname+'/../.env'});
 
     return {
         plugins: [react()],
@@ -20,9 +20,10 @@ export default defineConfig(({ mode }) => {
         },
         server: {
             port: process.env.FRONTEND_PORT,
+            host: true,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:' + process.env.API_GATEWAY_PORT,
+                    target: 'http://api-gateway:' + process.env.API_GATEWAY_PORT,
                     changeOrigin: true,
                 },
             },

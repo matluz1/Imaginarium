@@ -2,10 +2,13 @@ version: '3'
 
 services:
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      dockerfile: ./prod.Dockerfile
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     environment:
+      MODE: ${MODE}
       FRONTEND_PORT: ${FRONTEND_PORT}
       API_GATEWAY_PORT: ${API_GATEWAY_PORT}
 
@@ -24,6 +27,7 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
+      MODE: ${MODE}
       BACKEND_PORT: ${BACKEND_PORT}
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}

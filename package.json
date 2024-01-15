@@ -2,11 +2,8 @@
   "name": "imaginarium",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "dev": "docker-compose -f docker-compose.dev.yml up",
     "deploy": "docker-compose up --build"
   },
-  "author": "matluz",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
+  "author": "matluz"
 }

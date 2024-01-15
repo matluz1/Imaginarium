@@ -2,11 +2,8 @@ const express = require('express');
 const app = express();
 const apiRouter = express.Router();
 const cors = require('cors');
-const dotenv = require('dotenv');
 
-const productionPort = process.argv[2];
-dotenv.config({path:__dirname+'/../.env.development'});
-const PORT = process.env.BACKEND_PORT || productionPort;
+const PORT = process.argv[2];
 
 //outside server.js?
 function generateRandomString() {
