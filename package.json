@@ -2,7 +2,7 @@
   "name": "imaginarium",
   "version": "1.0.0",
   "scripts": {
-    "dev": "docker-compose -f docker-compose.dev.yml up",
+    "dev": "docker-compose -f docker-compose.dev.yml up --build",
     "deploy": "docker-compose up --build"
   },
   "author": "matluz",
