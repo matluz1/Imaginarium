@@ -29,6 +29,18 @@ apiRouter.get('/generateToken', (req, res) => {
   res.json({ token });
 });
 
+app.post('/login', (req, res) => {
+  res.json({
+    access_token: {
+      userId: 1,
+    },
+  });
+});
+
+apiRouter.get('/protected', (req, res) => {
+  res.json({ message: 'hello' });
+});
+
 app.use('/', apiRouter);
 
 app.listen(PORT, () => {

@@ -1,0 +1,10 @@
+{
+  "keys": [
+    {
+      "kid": "sim2",
+      "kty": "oct",
+      "k": "${JWT_SECRET_KEY}",
+      "alg": "HS256"
+    }
+  ]
+}

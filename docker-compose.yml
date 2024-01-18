@@ -19,6 +19,7 @@ services:
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
       API_GATEWAY_PORT: ${API_GATEWAY_PORT}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     depends_on:
       - backend
 
