@@ -11,7 +11,7 @@ services:
       MODE: ${MODE}
       FRONTEND_PORT: ${FRONTEND_PORT}
       API_GATEWAY_PORT: ${API_GATEWAY_PORT}
-    image: 'erenes1/frontend:${DOCKER_TAG}'
+    image: '${DOCKERHUB_USERNAME}/frontend:${DOCKER_TAG}'
 
   api-gateway:
     build: ./api-gateway
@@ -23,7 +23,7 @@ services:
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     depends_on:
       - backend
-    image: 'erenes1/api-gateway:${DOCKER_TAG}'
+    image: '${DOCKERHUB_USERNAME}/api-gateway:${DOCKER_TAG}'
 
   backend:
     build: ./backend
@@ -36,4 +36,4 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
-    image: 'erenes1/backend:${DOCKER_TAG}'
+    image: '${DOCKERHUB_USERNAME}/backend:${DOCKER_TAG}'
