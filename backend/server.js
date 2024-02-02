@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const apiRouter = express.Router();
-const cors = require('cors');
 
 const PORT = process.argv[2];
 
@@ -12,7 +11,6 @@ const users = [
   },
 ];
 
-app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
