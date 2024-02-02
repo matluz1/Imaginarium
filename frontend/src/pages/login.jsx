@@ -5,6 +5,15 @@ export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleCheck = async () => {
+    try {
+      const result = await axios.get('/api/protected');
+      console.log('Response:', result.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   const handleUsernameChange = (element) => {
     setUsername(element.target.value);
   };
@@ -56,6 +65,9 @@ export default function LoginPage() {
         </div>
         <button type="submit">Login</button>
       </form>
+      <div>
+        <button onClick={handleCheck}>Check</button>
+      </div>
     </div>
   );
 }
