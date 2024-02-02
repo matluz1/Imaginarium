@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const apiRouter = express.Router();
+const jwt = require('jsonwebtoken');
 
 const PORT = process.argv[2];
 
@@ -13,6 +14,20 @@ const users = [
 
 app.use(express.json());
 
+function generateAccessToken() {
+  const key = process.env.JWT_SECRET_KEY;
+  const base64Key = Buffer.from(key, 'base64');
+  const options = {
+    expiresIn: '15m',
+    algorithm: 'HS256',
+    keyid: 'sim2',
+    header: { typ: undefined },
+    noTimestamp: true,
+  };
+
+  return jwt.sign({ userId: 1 }, base64Key, options);
+}
+
 app.get('/', (req, res) => {
   res.send('hello');
 });
@@ -24,18 +39,14 @@ app.post('/login', (req, res) => {
     (user) => user.username === username && user.password === password,
   );
   if (user) {
-    // Convert the expiration time to a Unix timestamp
-    const currentTime = new Date();
-    const expirationTime = new Date(currentTime.getTime() + 15 * 60000); // 15 minutes * 60 seconds * 1000 milliseconds
-    const expUnixTimestamp = Math.floor(expirationTime.getTime() / 1000);
+    const accessToken = generateAccessToken();
+
     res.json({
-      access_token: {
-        userId: 1,
-        exp: expUnixTimestamp,
-      },
+      access_token: accessToken,
     });
+  } else {
+    res.status(401).send('Invalid username or password');
   }
-  res.status(401).send('Invalid username or password');
 });
 
 apiRouter.get('/protected', (req, res) => {
