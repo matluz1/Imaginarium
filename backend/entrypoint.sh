@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "${MODE}" = "DEV" ]; then 
-  npx nodemon server ${BACKEND_PORT}
+  npx nodemon server
 elif [ "${MODE}" = "PROD" ]; then 
-  node server ${BACKEND_PORT}
+  node server
 fi
