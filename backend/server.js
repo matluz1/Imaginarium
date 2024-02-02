@@ -4,7 +4,7 @@ const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
-const PORT = process.argv[2];
+const PORT = process.env.BACKEND_PORT;
 
 const users = [
   {
