@@ -5,36 +5,34 @@ const cors = require('cors');
 
 const PORT = process.argv[2];
 
-//outside server.js?
-function generateRandomString() {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-
-  for (let i = 0; i < 12; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-
-  return result;
-}
+const users = [
+  {
+    username: 'user1',
+    password: 'password1',
+  },
+];
 
 app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('hello');
 });
 
-apiRouter.get('/generateToken', (req, res) => {
-  const token = generateRandomString();
-  res.json({ token });
-});
-
 app.post('/login', (req, res) => {
-  res.json({
-    access_token: {
-      userId: 1,
-    },
-  });
+  console.log(req.body);
+  const { username, password } = req.body;
+  const user = users.find(
+    (user) => user.username === username && user.password === password,
+  );
+  if (user) {
+    res.json({
+      access_token: {
+        userId: 1,
+      },
+    });
+  }
+  res.status(401).send('Invalid username or password');
 });
 
 apiRouter.get('/protected', (req, res) => {
