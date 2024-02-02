@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const PORT = process.argv[2];
 
@@ -12,6 +13,7 @@ const users = [
   },
 ];
 
+app.use(cookieParser());
 app.use(express.json());
 
 function generateAccessToken() {
@@ -41,9 +43,8 @@ app.post('/login', (req, res) => {
   if (user) {
     const accessToken = generateAccessToken();
 
-    res.json({
-      access_token: accessToken,
-    });
+    res.cookie('access_token', accessToken, { httpOnly: true });
+    res.send('Login successful');
   } else {
     res.status(401).send('Invalid username or password');
   }
