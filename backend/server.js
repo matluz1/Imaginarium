@@ -24,9 +24,14 @@ app.post('/login', (req, res) => {
     (user) => user.username === username && user.password === password,
   );
   if (user) {
+    // Convert the expiration time to a Unix timestamp
+    const currentTime = new Date();
+    const expirationTime = new Date(currentTime.getTime() + 15 * 60000); // 15 minutes * 60 seconds * 1000 milliseconds
+    const expUnixTimestamp = Math.floor(expirationTime.getTime() / 1000);
     res.json({
       access_token: {
         userId: 1,
+        exp: expUnixTimestamp,
       },
     });
   }
