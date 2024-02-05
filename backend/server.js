@@ -51,6 +51,7 @@ app.post('/login', (req, res) => {
 });
 
 apiRouter.get('/protected', (req, res) => {
+  console.log('Received HTTP-only cookie:', req.cookies['access_token']);
   res.json({ message: 'hello' });
 });
 
