@@ -14,7 +14,7 @@
       "output_encoding": "no-op",
       "backend": [
         {
-          "url_pattern": "/login",
+          "url_pattern": "/api/auth/login",
           "method": "POST",
           "host": ["http://account:${ACCOUNT_PORT}"]
         }
@@ -35,7 +35,7 @@
       },
       "backend": [
         {
-          "url_pattern": "/protected",
+          "url_pattern": "/api/users/protected",
           "method": "GET",
           "host": ["http://account:${ACCOUNT_PORT}"]
         }

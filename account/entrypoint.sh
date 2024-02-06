@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "${MODE}" = "DEV" ]; then 
-  npx nodemon server
+  npx nodemon src/index
 elif [ "${MODE}" = "PROD" ]; then 
-  node server
+  node src/index
 fi
