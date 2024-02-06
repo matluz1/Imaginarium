@@ -37,4 +37,6 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      JWT_KEYID: ${JWT_KEYID}
     image: 'erenes1/backend:${DOCKER_TAG}'

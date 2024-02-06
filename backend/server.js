@@ -21,10 +21,9 @@ function generateAccessToken() {
   const base64Key = Buffer.from(key, 'base64');
   const options = {
     expiresIn: '15m',
-    algorithm: 'HS256',
-    keyid: 'sim2',
+    algorithm: process.env.JWT_ALGORITHM,
+    keyid: process.env.JWT_KEYID,
     header: { typ: undefined },
-    noTimestamp: true,
   };
 
   return jwt.sign({ userId: 1 }, base64Key, options);
