@@ -18,6 +18,11 @@ services:
     depends_on:
       - account
 
+  account-db:
+    extends:
+      file: docker-compose.yml
+      service: account-db
+
   account:
     extends:
       file: docker-compose.yml
@@ -25,7 +30,10 @@ services:
     volumes:
       - ./account:/app/
       - account-nodemodules:/app/node_modules
+    depends_on:
+      - account-db
 
 volumes:
   frontend-nodemodules: {}
   account-nodemodules: {}
+  postgres_data: {}

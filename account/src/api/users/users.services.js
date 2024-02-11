@@ -1,18 +1,31 @@
-function findUser(username, password) {
-  const users = [
-    {
-      username: 'user1',
-      password: 'password1',
+const bcrypt = require('bcrypt');
+const { db } = require('../../utils/db');
+
+function findUserById(id) {
+  return db.user.findUnique({
+    where: {
+      id,
     },
-  ];
+  });
+}
 
-  const user = users.find(
-    (user) => user.username === username && user.password === password,
-  );
+function findUserByEmail(email) {
+  return db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+}
 
-  return user;
+function createUserByEmailAndPassword(email, password) {
+  const hashedPassword = bcrypt.hashSync(password, 12);
+  return db.user.create({
+    data: { email, password: hashedPassword },
+  });
 }
 
 module.exports = {
-  findUser,
+  findUserById,
+  findUserByEmail,
+  createUserByEmailAndPassword,
 };

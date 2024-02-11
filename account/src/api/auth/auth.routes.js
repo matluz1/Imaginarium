@@ -1,21 +1,35 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const { findUserByEmail } = require('../users/users.services');
 const { generateAccessToken } = require('../../utils/jwt');
-const { findUser } = require('../users/users.services');
+
 const router = express.Router();
 
 router.post('/login', async (req, res, next) => {
   try {
-    console.log(req.body);
-    const { username, password } = req.body;
-    const user = findUser(username, password);
-    if (user) {
-      const accessToken = generateAccessToken();
-
-      res.cookie('access_token', accessToken, { httpOnly: true });
-      res.send('Login successful');
-    } else {
-      res.status(401).send('Invalid username or password');
+    const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(400);
+      throw new Error('You must provide an email and a password.');
     }
+
+    const existingUser = await findUserByEmail(email);
+
+    if (!existingUser) {
+      res.status(403);
+      throw new Error('Invalid login credentials.');
+    }
+
+    const validPassword = await bcrypt.compare(password, existingUser.password);
+    if (!validPassword) {
+      res.status(403);
+      throw new Error('Invalid login credentials.');
+    }
+
+    const accessToken = generateAccessToken(existingUser.id);
+
+    res.cookie('access_token', accessToken, { httpOnly: true });
+    res.send('Login successful');
   } catch (err) {
     next(err);
   }

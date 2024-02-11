@@ -21,6 +21,18 @@
       ]
     },
     {
+      "endpoint": "/api/register",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/api/users/register",
+          "method": "POST",
+          "host": ["http://account:${ACCOUNT_PORT}"]
+        }
+      ]
+    },
+    {
       "endpoint": "/api/protected",
       "input_headers": ["Cookie"],
       "method": "GET",
