@@ -5,6 +5,6 @@ if [ "${MODE}" = "DEV" ]; then
   npx prisma migrate dev --name init
   npx nodemon src/index
 elif [ "${MODE}" = "PROD" ]; then
-  npx prisma migrate deploy --name init
+  npx prisma migrate deploy
   node src/index
 fi
