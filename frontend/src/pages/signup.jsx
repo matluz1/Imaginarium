@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleCheck = async () => {
-    try {
-      const result = await axios.get('/api/protected');
-      console.log('Response:', result.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -25,26 +16,26 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('/api/login', {
+      .post('/api/register', {
         email,
         password,
       })
       .then((response) => {
-        console.log('Response:', response.data);
+        console.log('Signup Response:', response.data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error('Signup Error:', error);
       });
   };
 
   return (
-    <div className="login-page">
-      <h2>Login</h2>
+    <div className="signup-page">
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={handleEmailChange}
@@ -61,11 +52,8 @@ export default function LoginPage() {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
       </form>
-      <div>
-        <button onClick={handleCheck}>Check</button>
-      </div>
     </div>
   );
 }

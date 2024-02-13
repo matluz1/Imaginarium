@@ -4,7 +4,7 @@ const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
-const PORT = process.env.BACKEND_PORT;
+const PORT = process.env.ACCOUNT_PORT;
 
 const users = [
   {
@@ -21,10 +21,9 @@ function generateAccessToken() {
   const base64Key = Buffer.from(key, 'base64');
   const options = {
     expiresIn: '15m',
-    algorithm: 'HS256',
-    keyid: 'sim2',
+    algorithm: process.env.JWT_ALGORITHM,
+    keyid: process.env.JWT_KEYID,
     header: { typ: undefined },
-    noTimestamp: true,
   };
 
   return jwt.sign({ userId: 1 }, base64Key, options);
@@ -51,6 +50,7 @@ app.post('/login', (req, res) => {
 });
 
 apiRouter.get('/protected', (req, res) => {
+  console.log('Received HTTP-only cookie:', req.cookies['access_token']);
   res.json({ message: 'hello' });
 });
 

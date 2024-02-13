@@ -16,16 +16,24 @@ services:
       file: docker-compose.yml
       service: api-gateway
     depends_on:
-      - backend
+      - account
 
-  backend:
+  account-db:
     extends:
       file: docker-compose.yml
-      service: backend
+      service: account-db
+
+  account:
+    extends:
+      file: docker-compose.yml
+      service: account
     volumes:
-      - ./backend:/app/
-      - backend-nodemodules:/app/node_modules
+      - ./account:/app/
+      - account-nodemodules:/app/node_modules
+    depends_on:
+      - account-db
 
 volumes:
   frontend-nodemodules: {}
-  backend-nodemodules: {}
+  account-nodemodules: {}
+  postgres_data: {}

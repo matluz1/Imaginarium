@@ -18,23 +18,45 @@ services:
     ports:
       - '${API_GATEWAY_PORT}:${API_GATEWAY_PORT}'
     environment:
-      BACKEND_PORT: ${BACKEND_PORT}
+      ACCOUNT_PORT: ${ACCOUNT_PORT}
       API_GATEWAY_PORT: ${API_GATEWAY_PORT}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      JWT_KEYID: ${JWT_KEYID}
     depends_on:
-      - backend
+      - account
     image: 'erenes1/api-gateway:${DOCKER_TAG}'
 
-  backend:
-    build: ./backend
+  account:
+    build: ./account
     ports:
-      - '${BACKEND_PORT}:${BACKEND_PORT}'
+      - '${ACCOUNT_PORT}:${ACCOUNT_PORT}'
     environment:
       MODE: ${MODE}
-      BACKEND_PORT: ${BACKEND_PORT}
+      ACCOUNT_PORT: ${ACCOUNT_PORT}
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
+      DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
-    image: 'erenes1/backend:${DOCKER_TAG}'
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      JWT_KEYID: ${JWT_KEYID}
+    depends_on:
+      - account-db
+    image: 'erenes1/account:${DOCKER_TAG}'
+
+  account-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local

@@ -9,34 +9,36 @@
   },
   "endpoints": [
     {
-      "endpoint": "/api/generateToken",
-      "method": "GET",
-      "backend": [
-        {
-          "url_pattern": "/generateToken",
-          "host": "http://backend:${BACKEND_PORT}"
-        }
-      ]
-    },
-    {
       "endpoint": "/api/login",
       "method": "POST",
       "output_encoding": "no-op",
       "backend": [
         {
-          "url_pattern": "/login",
+          "url_pattern": "/api/auth/login",
           "method": "POST",
-          "encoding": "no-op",
-          "host": ["http://backend:${BACKEND_PORT}"]
+          "host": ["http://account:${ACCOUNT_PORT}"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/register",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "url_pattern": "/api/users/register",
+          "method": "POST",
+          "host": ["http://account:${ACCOUNT_PORT}"]
         }
       ]
     },
     {
       "endpoint": "/api/protected",
+      "input_headers": ["Cookie"],
       "method": "GET",
       "extra_config": {
         "auth/validator": {
-          "alg": "HS256",
+          "alg": "${JWT_ALGORITHM}",
           "jwk_local_path": "symmetric.json",
           "operation_debug": true,
           "disable_jwk_security": true,
@@ -45,9 +47,9 @@
       },
       "backend": [
         {
-          "url_pattern": "/protected",
+          "url_pattern": "/api/users/protected",
           "method": "GET",
-          "host": ["http://backend:${BACKEND_PORT}"]
+          "host": ["http://account:${ACCOUNT_PORT}"]
         }
       ]
     }
